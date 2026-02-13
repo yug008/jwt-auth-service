@@ -28,7 +28,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception{       //we use it to make our own custom SecurityFilterChain. The return type is 'SecurityFilterChain' as we are returning a new (new custom) filter chain
         http.csrf(customizer -> customizer.disable());                       //disables csrf token
-        http.authorizeHttpRequests(auth -> auth.requestMatchers(org.springframework.http.HttpMethod.POST, "/login").permitAll().anyRequest().authenticated());   //authentication is applied for any request. Thus all requests should come from authenticated users only
+        http.authorizeHttpRequests(auth -> auth.requestMatchers(org.springframework.http.HttpMethod.POST, "/login","/register").permitAll().anyRequest().authenticated());   //authentication is applied for any request. Thus all requests should come from authenticated users only
         //http.formLogin(Customizer.withDefaults());                                     //Turns the default Spring Security login system back ON.
         //http.httpBasic(Customizer.withDefaults());                            //It enables form-based login and use the default configuration. Tools like Postman prefer httpBasic
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));       //here Spring Security will NOT use HTTP sessions at all. Every request must authenticate itself. Thus for every request you have to pass the credentials for loginForm. And so everytime credentials are entered a new sessionID is generated
