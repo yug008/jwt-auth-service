@@ -19,17 +19,14 @@ public class JwtService {                            //this class generates jwt 
         return Jwts.builder().setSubject(username).setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)).signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes())).compact();
     }
 
-    // 🔎 Extract Username
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    // 🔎 Extract Expiration
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    // 🔎 Generic Claim Extractor
     public <T> T extractClaim(String token,
                               Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
@@ -44,7 +41,6 @@ public class JwtService {                            //this class generates jwt 
                 .getPayload();
     }
 
-    // 🔐 Validate Token
     public boolean validateToken(String token,
                                  UserDetails userDetails) {
         final String username = extractUsername(token);
@@ -52,12 +48,10 @@ public class JwtService {                            //this class generates jwt 
                 && !isTokenExpired(token));
     }
 
-    // ⏳ Check Expiration
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    // 🔑 Signing Key
     private javax.crypto.SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
