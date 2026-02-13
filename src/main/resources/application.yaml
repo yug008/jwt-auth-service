@@ -3,9 +3,9 @@ spring:
     name: auth-service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/authsecuritydemo
-    username: root
-    password: Radhe123
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/${DB_NAME:authsecuritydemo}
+    username: ${DB_USER:root}
+    password: ${DB_PASS:password}
 
   jpa:
     hibernate:
